@@ -41,11 +41,11 @@ class ScheduleEntry:
         # 出発時刻をtimeオブジェクトに変換
         dep_time = datetime.strptime(self.departure_time, "%H:%M").time()
         
-        # 現在の日付と出発時刻を組み合わせてdatetimeオブジェクトを作成
-        dep_datetime = datetime.combine(current_datetime.date(), dep_time)
-        
-        # 出発時刻が過ぎている場合は翌日に設定
-        if dep_datetime < current_datetime:
-            dep_datetime += timedelta(days=1)
-        
-        return dep_datetime - current_datetime
+        # 現在の日付情報と発車時刻を組み合わせてdatetimeオブジェクトを作成
+        departure_dt = datetime.combine(current_datetime.date(), self.departure_time)
+
+        # もし発車時刻が現在の時刻より前なら、翌日の発車時刻として扱う
+        if departure_dt < current_datetime:
+            departure_dt += timedelta(days=1)
+
+        return departure_dt - current_datetime
