@@ -27,3 +27,25 @@ class ScheduleEntry:
             str: 出発時刻の説明
         """
         return f"出発時刻: {self.departure_time}" 
+
+    def time_until(self, current_datetime: datetime) -> timedelta:
+        """
+        現在時刻からの出発までの時間差を計算する
+
+        Args:
+            current_datetime (datetime): 現在の日時
+
+        Returns:
+            timedelta: 出発までの時間差
+        """
+        # 出発時刻をtimeオブジェクトに変換
+        dep_time = datetime.strptime(self.departure_time, "%H:%M").time()
+        
+        # 現在の日付と出発時刻を組み合わせてdatetimeオブジェクトを作成
+        dep_datetime = datetime.combine(current_datetime.date(), dep_time)
+        
+        # 出発時刻が過ぎている場合は翌日に設定
+        if dep_datetime < current_datetime:
+            dep_datetime += timedelta(days=1)
+        
+        return dep_datetime - current_datetime
