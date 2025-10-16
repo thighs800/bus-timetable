@@ -1,4 +1,5 @@
-from datetime import time, datetime, taimedalta
+from datetime import time, datetime, timedelta
+
 
 class ScheduleEntry:
     """
